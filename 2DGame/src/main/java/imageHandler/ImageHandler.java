@@ -8,11 +8,11 @@ import javafx.scene.image.Image;
  */
 public class ImageHandler {
 
-    private Image grass = new Image("grass.png");
-    private Image empty = new Image( "empty.png" );
-    private Image water = new Image( "water.png" );
-    private Image stone = new Image( "stone.png" );
-    private Image space = new Image( "space.png" );
+    private final Image grass = new Image("grass.png");
+    private final Image empty = new Image( "empty.png" );
+    private final Image water = new Image( "water.png" );
+    private final Image stone = new Image( "stone.png" );
+    private final Image space = new Image( "space.png" );
 
     public Image returnImage(String type){
         if ("grass" == type){

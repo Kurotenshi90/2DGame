@@ -4,10 +4,10 @@ package blocks;
  * Created by Peter-Paul on 05/12/2015.
  */
 public class BlockFactory {
-    private Block grass = new Block("grass");
-    private Block water = new Block("water");
-    private Block stone = new Block("stone");
-    private Block empty = new Block("empty");
+    private Block grass = new Block("grass", true);
+    private Block water = new Block("water", false);
+    private Block stone = new Block("stone",true);
+    private Block empty = new Block("empty",false);
 
     public Block returnBlock(String block){
         if ("grass" == block){
