@@ -61,7 +61,7 @@ public class Game extends Application {
                 if (player.getRealPosX() <= tileSize * 10) {
                     shakePosX = 0;
                     extraSpaceX = screenX;
-                } else if (player.getRealPosX() > tileSize * 10 && player.getRealPosX() < 67 * tileSize) {
+                } else if (player.getRealPosX() > tileSize * 10  && player.getRealPosX() < 67 * tileSize) {
                     extraSpaceX = screenX + 1;
                 } else if (player.getRealPosX() >= 67 * tileSize) {
                     shakePosX = 0;
@@ -92,19 +92,19 @@ public class Game extends Application {
                 }
 
                 int drawPosX = player.getRealPosX();
-                if (player.getRealPosX() >= 304) {
-                    drawPosX = 304;
+                if (player.getRealPosX() >= 320) {
+                    drawPosX = 320;
                 }
                 if (posX >= blocks.length - screenX) {
-                    drawPosX = player.getRealPosX() - ((blocks.length - 11) * 32) + 9 * tileSize - 16;
+                    drawPosX = player.getRealPosX() - ((blocks.length - 11) * 32) + 9 * tileSize ;
                 }
 
 
 
 
                 int drawPosY = player.getRealPosY();
-                if (player.getRealPosY() >= 208) {
-                    drawPosY = 208;
+                if (player.getRealPosY() >= 224) {
+                    drawPosY = 224;
                 }
                 if (posY >= blocks[0].length - screenY) {
                     drawPosY = player.getRealPosY() - ((blocks[0].length - 8) * 32) + 6 * tileSize -16;
