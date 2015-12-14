@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
+import levelLoader.Generator;
 import levelLoader.LevelReader;
 
 
@@ -21,11 +22,11 @@ public class Game extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
+    public Generator generator = new Generator();
     public ImageHandler imageHandler = new ImageHandler();
     public Player player = new Player();
     public LevelReader levelReader = new LevelReader("level1");
-    public Block[][] blocks = levelReader.returnMap();
+    public Block[][] blocks;
     public int screenX = 20;
     public int screenY = 14;
     public int tileSize = 32;
@@ -49,6 +50,7 @@ public class Game extends Application {
             public void handle(long currentNanoTime) {
                 posX = player.getPosX();
                 posY = player.getPosY();
+                blocks = generator.generateMap(100,50);
                 player.movePlayer(theScene, tileSize, screenX, screenY,  blocks);
 
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;

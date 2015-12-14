@@ -12,8 +12,8 @@ import java.util.ArrayList;
  * Created by Peter-Paul on 06/12/2015.
  */
 public class Player {
-    private int posX = 200;
-    private int posY = 200;
+    private int posX = 1*32;
+    private int posY = 1*32;
     private int blockX;
     private int blockY;
     private Image player;
