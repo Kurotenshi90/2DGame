@@ -17,7 +17,9 @@ public class Player {
     private int blockX;
     private int blockY;
     private Image player;
-    private int speed = 4;
+    private int jumpSpeed = 8;
+    private int moveSpeed = 4;
+    private int gravitie = 4;
 
     public Player() {
         player = new Image("player.png");
@@ -46,7 +48,7 @@ public class Player {
         });
 
         if (input.contains("LEFT") || input.contains("A")) {
-            posX -= speed;
+            posX -= moveSpeed;
             if (blocks[(posX / 32)][posY / 32].isSolid()) {
                 posX = (posX / 32 + 1) * 32;
             }
@@ -55,16 +57,27 @@ public class Player {
             }
         }
         if (input.contains("RIGHT") || input.contains("D")) {
-            posX += speed;
-            if (blocks[(posX / 32) + 1][posY / 32].isSolid()) {
-                posX = (posX / 32) * 32;
-            }
-            if (blocks[(posX / 32) + 1][(posY + 31) / 32].isSolid()) {
-                posX = (posX / 32) * 32;
+            posX += moveSpeed;
+                if (blocks[(posX / 32) + 1][posY / 32].isSolid()) {
+                    posX = (posX / 32) * 32;
+                }
+                if (blocks[(posX / 32) + 1][(posY + 31) / 32].isSolid()) {
+                    posX = (posX / 32) * 32;
             }
         }
+
+        //if (input.contains("DOWN") || input.contains("S")) {
+        posY += gravitie;
+        if (blocks[(posX / 32)][(posY / 32) + 1].isSolid()) {
+            posY = (posY / 32) * 32;
+        }
+        if (blocks[((posX + 31) / 32)][(posY / 32) + 1].isSolid()) {
+            posY = (posY / 32) * 32;
+        }
+        //}
+
         if (input.contains("UP") || input.contains("W")) {
-            posY -= speed;
+            posY -= jumpSpeed;
             if (blocks[(posX / 32)][(posY / 32)].isSolid()) {
                 posY = (posY / 32 + 1) * 32;
             }
@@ -72,20 +85,11 @@ public class Player {
                 posY = (posY / 32 + 1) * 32;
             }
         }
-        if (input.contains("DOWN") || input.contains("S")) {
-            posY += speed;
-            if (blocks[(posX / 32)][(posY / 32) + 1].isSolid()) {
-                posY = (posY / 32) * 32;
-            }
-            if (blocks[((posX + 31) / 32)][(posY / 32) + 1].isSolid()) {
-                posY = (posY / 32) * 32;
-            }
-        }
+
         blockX = posX / tileSize;
         blockY = posY / tileSize;
 
         checkBlocksToDraw(tileSize, screenX, screenY, blocks[0].length, blocks.length);
-        // block(blocks, tileSize);
     }
 
     public void checkBlocksToDraw(int tileSize, int screenX, int screenY, int heightArray, int lengthArray) {
@@ -121,22 +125,6 @@ public class Player {
             // half size of tilesize added is abit weird
         else if (posY > heightArray * tileSize - halfTile)
             posY = heightArray * tileSize - halfTile;
-    }
-
-    public Block[] block(Block[][] blocks, int tileSize) {
-        Block[] blocksInRanged = new Block[8];
-        blockX = posX / tileSize;
-        blockY = posY / tileSize;
-        blocksInRanged[0] = blocks[blockX + 1][blockY];
-        blocksInRanged[1] = blocks[blockX][blockY + 1];
-        blocksInRanged[2] = blocks[blockX - 1][blockY];
-        blocksInRanged[3] = blocks[blockX][blockY - 1];
-        blocksInRanged[4] = blocks[blockX + 1][blockY + 1];
-        blocksInRanged[5] = blocks[blockX - 1][blockY - 1];
-        blocksInRanged[6] = blocks[blockX - 1][blockY + 1];
-        blocksInRanged[7] = blocks[blockX + 1][blockY - 1];
-
-        return blocksInRanged;
     }
 
     public int getPosY() {
