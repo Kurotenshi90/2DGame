@@ -8,6 +8,8 @@ public class BlockFactory {
     private Block water = new Block("water", false, 2);
     private Block stone = new Block("stone",true, 3);
     private Block empty = new Block("empty",false, 0);
+    private Block grassdirt = new Block("grassdirt",true, 4);
+    private Block cloud = new Block("cloud",true, 5);
 
     public Block returnBlock(String block){
         if ("grass" == block){
@@ -21,6 +23,12 @@ public class BlockFactory {
         }
         if ("stone" == block){
             return stone;
+        }
+        if ("grassdirt" == block){
+            return grassdirt;
+        }
+        if ("cloud" == block){
+            return cloud;
         }
         else{
             return empty;

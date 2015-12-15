@@ -29,6 +29,10 @@ public class LevelReader {
                     test[i][j] = blockFactory.returnBlock("empty");
                 if(matrix[i][j] == 3)
                     test[i][j] = blockFactory.returnBlock("water");
+                if(matrix[i][j] == 4)
+                    test[i][j] = blockFactory.returnBlock("grassdirt");
+                if(matrix[i][j] == 5)
+                    test[i][j] = blockFactory.returnBlock("cloud");
 
             }
         }

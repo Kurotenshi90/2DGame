@@ -12,14 +12,16 @@ import java.util.ArrayList;
  * Created by Peter-Paul on 06/12/2015.
  */
 public class Player {
-    private int posX = 1*32;
-    private int posY = 1*32;
+    private int posX = 0*16;
+    private int posY = 0*16;
     private int blockX;
     private int blockY;
     private Image player;
     private int jumpSpeed = 8;
-    private int moveSpeed = 4;
+    private int moveSpeed = 3;
     private int gravitie = 4;
+    private int playerLenght = 24;
+    private int playerHeight = 36;
 
     public Player() {
         player = new Image("player.png");
@@ -28,7 +30,6 @@ public class Player {
     ArrayList<String> input = new ArrayList<String>();
 
     public void movePlayer(Scene theScene, int tileSize, int screenX, int screenY, Block[][] blocks) {
-
         theScene.setOnKeyPressed(
 
                 new EventHandler<KeyEvent>() {
@@ -49,45 +50,83 @@ public class Player {
 
         if (input.contains("LEFT") || input.contains("A")) {
             posX -= moveSpeed;
-            if (blocks[(posX / 32)][posY / 32].isSolid()) {
-                posX = (posX / 32 + 1) * 32;
+            if (posX < 0) {
+                posX = 0;
             }
-            if (blocks[(posX / 32)][(posY + 31) / 32].isSolid()) {
-                posX = (posX / 32 +1) * 32;
+            if (blocks[(posX / tileSize)][posY / tileSize].isSolid()) {
+                posX = (posX / tileSize + 1) * tileSize;
+            }
+            if (blocks[(posX / tileSize)][(posY+12) / tileSize].isSolid()) {
+                posX = (posX / tileSize + 1) * tileSize;
+            }
+            if (blocks[(posX / tileSize)][(posY+24) / tileSize].isSolid()) {
+                posX = (posX / tileSize + 1) * tileSize;
+            }
+            if (blocks[(posX / tileSize)][(posY + 35) / tileSize].isSolid()) {
+                posX = (posX / tileSize + 1) * tileSize;
             }
         }
         if (input.contains("RIGHT") || input.contains("D")) {
+
             posX += moveSpeed;
-                if (blocks[(posX / 32) + 1][posY / 32].isSolid()) {
-                    posX = (posX / 32) * 32;
+            if (posX + 8 >= (blocks.length - 1) * tileSize) {
+                posX = (blocks.length - 1) * tileSize -8;
+            }
+
+            if (posX+8 < (blocks.length - 1) * tileSize) {
+                if (blocks[((posX + 8) / tileSize) + 1][(posY) / tileSize].isSolid()) {
+                    posX = ((posX / tileSize) * tileSize)+8;
                 }
-                if (blocks[(posX / 32) + 1][(posY + 31) / 32].isSolid()) {
-                    posX = (posX / 32) * 32;
+                if (blocks[((posX + 8) / tileSize) + 1][(posY + 12) / tileSize].isSolid()) {
+                    posX = ((posX / tileSize) * tileSize)+8;
+                }
+                if (blocks[((posX + 8) / tileSize) + 1][(posY + 24) / tileSize].isSolid()) {
+                    posX = ((posX / tileSize) * tileSize)+8;
+                }
+                if (blocks[((posX + 8) / tileSize) + 1][(posY + 35) / tileSize].isSolid()) {
+                    posX = ((posX / tileSize) * tileSize)+8;
+                }
             }
         }
 
         //if (input.contains("DOWN") || input.contains("S")) {
-        posY += gravitie;
-        if (blocks[(posX / 32)][(posY / 32) + 1].isSolid()) {
-            posY = (posY / 32) * 32;
-        }
-        if (blocks[((posX + 31) / 32)][(posY / 32) + 1].isSolid()) {
-            posY = (posY / 32) * 32;
-        }
+            posY += gravitie;
+            if (posY >= (blocks[0].length - 1) * tileSize) {
+                posY = (blocks[0].length - 1) * tileSize;
+            }
+            if (posY < (blocks[0].length - 1) * tileSize) {
+                if (blocks[(posX / tileSize)][((posY +18) / tileSize) + 1].isSolid()) {
+                    posY = (posY / tileSize) * tileSize - 4;
+                }
+                if (blocks[((posX + 12) / tileSize)][((posY +18) / tileSize) + 1].isSolid()) {
+                    posY = (posY / tileSize) * tileSize - 4;
+                }
+                if (blocks[((posX + 23) / tileSize)][((posY +18) / tileSize) + 1].isSolid()) {
+                    posY = (posY / tileSize) * tileSize - 4;
+                }
+            }
         //}
 
         if (input.contains("UP") || input.contains("W")) {
             posY -= jumpSpeed;
-            if (blocks[(posX / 32)][(posY / 32)].isSolid()) {
-                posY = (posY / 32 + 1) * 32;
+            if (posY < 0) {
+                posY = 0;
             }
-            if (blocks[((posX + 31)/ 32)][(posY / 32)].isSolid()) {
-                posY = (posY / 32 + 1) * 32;
+            if (blocks[(posX / tileSize)][((posY) / tileSize)].isSolid()) {
+                posY = (posY / tileSize + 1) * tileSize;
+            }
+            if (blocks[((posX + 12) / tileSize)][(posY / tileSize)].isSolid()) {
+                posY = (posY / tileSize + 1) * tileSize;
+            }
+            if (blocks[((posX + 23) / tileSize)][(posY / tileSize)].isSolid()) {
+                posY = (posY / tileSize + 1) * tileSize;
             }
         }
 
         blockX = posX / tileSize;
         blockY = posY / tileSize;
+//        System.out.println(posY);
+       System.out.println(posX/32);
 
         checkBlocksToDraw(tileSize, screenX, screenY, blocks[0].length, blocks.length);
     }
@@ -107,11 +146,7 @@ public class Player {
         else if (posX >= maxScreenX * tileSize)
             blockX = lengthArray - screenX;
         // bepaal posX buiten box
-        if (posX < 0)
-            posX = 0;
-            // half size of tilesize added is abit weird
-        else if (posX > lengthArray * tileSize - halfTile)
-            posX = lengthArray * tileSize - halfTile;
+
         // bepaal Yblock
         if (posY <= tileSize * halfScreenY)
             blockY = 0;
@@ -119,9 +154,8 @@ public class Player {
             blockY = posY / tileSize - halfScreenY;
         else if (posY >= maxScreenY * tileSize)
             blockY = heightArray - screenY;
-        // bepaal posY buiten box
-        if (posY < 0)
-            posY = 0;
+            // bepaal posY buiten box
+
             // half size of tilesize added is abit weird
         else if (posY > heightArray * tileSize - halfTile)
             posY = heightArray * tileSize - halfTile;
