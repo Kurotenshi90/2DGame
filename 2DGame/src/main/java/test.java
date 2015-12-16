@@ -31,9 +31,10 @@ public class test extends Application
     public Player player = new Player();
     public LevelReader levelReader = new LevelReader("level1");
     public Block[][] blocks = levelReader.returnMap();
-    public int screenX = 50;
-    public int screenY = 40;
+    public int screenX = 20;
+    public int screenY = 14;
     public int tileSize = 16;
+    public int scale = 2;
 
     public int posX;
     public int posY;
@@ -49,7 +50,7 @@ public class test extends Application
         Group root = new Group();
         final Scene theScene = new Scene(root);
         theStage.setScene(theScene);
-        Canvas canvas = new Canvas(tileSize * screenX, tileSize * screenY);
+        Canvas canvas = new Canvas(tileSize * screenX * scale, tileSize * screenY * scale);
         root.getChildren().add(canvas);
         final GraphicsContext gc = canvas.getGraphicsContext2D();
         final long startNanoTime = System.nanoTime();
@@ -64,6 +65,7 @@ public class test extends Application
         gameLoop.setCycleCount( Timeline.INDEFINITE );
 
         final long timeStart = System.currentTimeMillis();
+        gc.scale(scale,scale);
 
         KeyFrame kf = new KeyFrame(
                 Duration.seconds(0.017),                // 60 FPS
@@ -146,6 +148,7 @@ public class test extends Application
 
 
                         gc.drawImage(player.drawPlayer(), drawPosX, drawPosY);
+
                     }
                 });
 

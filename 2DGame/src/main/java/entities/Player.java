@@ -22,9 +22,21 @@ public class Player {
     private int gravitie = 4;
     private int playerLenght = 24;
     private int playerHeight = 36;
+    private Image[] walkRight = new Image[3];
+    private Image[] walkLeft = new Image[3];
+    private int counter = 0;
+    private int counterframes = 0;
+    boolean walkingLeft = false;
+    boolean walkingRight = true;
 
     public Player() {
-        player = new Image("player.png");
+        player = new Image("playerright1.png");
+        walkRight[2] = new Image("playerright2.png");
+        walkRight[1] = new Image("playerright1.png");
+        walkRight[0] = new Image("playerright0.png");
+        walkLeft[2] = new Image("playerleft2.png");
+        walkLeft[1] = new Image("playerleft1.png");
+        walkLeft[0] = new Image("playerleft0.png");
     }
 
     ArrayList<String> input = new ArrayList<String>();
@@ -49,6 +61,17 @@ public class Player {
         });
 
         if (input.contains("LEFT") || input.contains("A")) {
+            walkingLeft = true;
+            walkingRight = false;
+            counterframes = counterframes+1;
+            if(counterframes == 8){
+                counter = counter + 1;
+                counterframes = 0;
+            }
+
+            if(counter == 3 ){
+                counter = 0;
+            }
             posX -= moveSpeed;
             if (posX < 0) {
                 posX = 0;
@@ -67,7 +90,18 @@ public class Player {
             }
         }
         if (input.contains("RIGHT") || input.contains("D")) {
+            walkingLeft = false;
+            walkingRight = true;
+            counterframes = counterframes+1;
+            if(counterframes == 8){
+                counter = counter + 1;
+                counterframes = 0;
+            }
 
+            if(counter == 3 ){
+                counter = 0;
+            }
+            System.out.println(counter);
             posX += moveSpeed;
             if (posX + 8 >= (blocks.length - 1) * tileSize) {
                 posX = (blocks.length - 1) * tileSize -8;
@@ -178,6 +212,12 @@ public class Player {
     }
 
     public Image drawPlayer() {
-        return player;
+        if (walkingRight == true) {
+            return walkRight[counter];
+        }
+        if (walkingLeft == true){
+            return walkLeft[counter];
+        }
+        return walkRight[counter];
     }
 }
